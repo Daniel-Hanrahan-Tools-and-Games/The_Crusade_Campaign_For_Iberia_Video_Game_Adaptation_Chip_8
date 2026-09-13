@@ -1,2 +1,146 @@
 # The_Crusade_Campaign_For_Iberia_Video_Game_Adaptation_Chip_8
 Chip 8 version of The_Crusade_Campaign_For_Iberia_Video_Game.
+
+
+You need to run .ch8 file in Chip 8 Emulator/Interpreter
+
+
+<h3>Both of these links take you to The_Crusade_Campaign_For_Iberia Video Game adaptation</h3>
+
+<a href="https://github.com/Daniel-Hanrahan-Tools-and-Games/The_Crusade_Campaign_For_Iberia">The_Crusade_Campaign_For_Iberia Repository Page</a>
+
+<a href="https://daniel-hanrahan-tools-and-games.github.io/The_Crusade_Campaign_For_Iberia/">The_Crusade_Campaign_For_Iberia ReadMe Page</a>
+
+
+
+WARNING: You may have control some of these cities, write them down.
+0. Almeria
+1. Pampalona
+2. Zargosa
+3. Porto
+4. Barcelona
+5. Toledo
+6. Coimbra
+7. Santarem
+8. Lisbon
+9. Faro
+A. Cordoba
+B. Seville
+C. Grenada
+D. Baleric Islands
+
+Controls(Chip 8 Controls) and explanation of whats happening on screen:
+5 = select choice to attack
+2 = go/scroll up on choices
+8 = go/scroll down on choices
+
+When c is shown on startup press 5 on chip 8 keypad.
+
+when f is shown on screen after few seconds after selecting option you failed to take city, to get back to selection press 5 on chip 8 keypad.
+
+when a is shown on screen after few seconds after selecting option you succeeded to take city , to get back to selection press 5 on chip 8 keypad.
+
+
+
+CC BY-SA 4.0 and GNU GPL v3.0 Conditional Exceptions to use MPL 2.0 and CC BY-SA 4.0 or CC BY 4.0
+
+If the following condition is met, the licensing rules for both content covered by GNU GPL v3.0 and content not covered by GNU GPL v3.0 are modified as described below:
+
+Condition:
+
+The developer is distributing, porting, or integrating the software with platforms or environments that impose requirements incompatible with GPL-3.0, including but not limited to:
+- proprietary or non-redistributable SDKs
+- confidential hardware or platform documentation
+- legally required confidentiality obligations preventing full GPL redistribution
+- safety-regulated or certified systems where full GPL redistribution cannot be satisfied
+
+Effect on licensing:
+
+- Content covered by GNU GPL v3.0: May instead be used under the Mozilla Public License 2.0.
+
+- Content not covered by GNU GPL v3.0 (e.g., assets): Normally may be used under CC BY-SA 4.0. If ShareAlike requirements of CC BY-SA 4.0 prevent lawful distribution under the MPL alternative, developers may instead use CC BY 4.0 **solely to the extent necessary** to enable such distribution.
+
+These exceptions apply **only when the condition above is met**.
+
+
+
+
+CC BY-SA 4.0 and GNU GPL v3.0 Conditional Exceptions to use BSD-3-Clause and CC BY 4.0:
+
+If **either** of the following conditions is met, the licensing
+rules for both content covered by GNU GPL v3.0 and content not
+covered by GNU GPL v3.0 are modified as described below:
+
+Conditions:
+
+1. The developer has made a licensing agreement with another entity
+   (excluding corporate/LLC or equivalent entities) that prohibits the
+   redistribution of content under copyleft licenses.
+
+2. The developer adds assets that they do not own and uses them
+   under fair use, or equivalent/similar legal arrangements, where
+   the developer cannot legally contribute those assets under a
+   copyleft license.
+
+Effect on licensing:
+
+- Content covered by GNU GPL v3.0: May instead be used under the
+  BSD 3-Clause License.
+
+- Content not covered by GNU GPL v3.0: Assets originally under CC BY-SA 4.0
+  may instead be used under CC BY 4.0.
+
+These exceptions apply **only when at least one of the conditions above is met**.
+
+
+
+
+
+CC BY-SA 4.0 and GNU GPL v3.0 Conditional Exceptions to use PolyForm Noncommercial and CC BY-NC 4.0
+
+The PolyForm Noncommercial License (and Creative Commons
+Attribution-NonCommercial 4.0 International for non-code
+content) may be used as an alternative only when the combined
+work is subject to binding legal, contractual, or platform-
+imposed restrictions that prohibit commercial use.
+
+Such restrictions may arise from third-party licenses,
+distribution platforms, or other enforceable legal terms that
+make commercial use of the combined work not legally permitted.
+
+Content covered by the primary license (e.g., source code or
+other covered material) remains governed by that license.
+
+Content not covered by the primary license (e.g., assets,
+documentation, or other non-code materials) is governed by
+CC BY-NC 4.0, unless otherwise stated.
+
+This alternative applies only to the extent necessary to
+comply with such restrictions.
+
+
+
+
+CC BY-SA 4.0 and GNU GPL v3.0 Conditional Exceptions to use PolyForm Strict and CC BY-NC-ND 4.0
+
+The PolyForm Strict License may be used as an alternative
+license only when the combined work is subject to binding
+legal, contractual, or platform-imposed restrictions that
+require both non-commercial use and prohibit the creation of
+derivative works as part of the distribution terms.
+
+Such restrictions may arise from third-party licenses,
+distribution platforms, or other enforceable legal terms that
+impose both non-commercial and no-derivatives requirements on
+the combined work.
+
+Content covered by the primary license (e.g., source code or
+other covered material) remains governed by that license.
+
+Content not covered by the primary license (e.g., assets,
+documentation, or other non-code materials) is governed by
+Creative Commons Attribution-NonCommercial-NoDerivatives
+4.0 International (CC BY-NC-ND 4.0), unless otherwise stated.
+
+This alternative applies only to the extent necessary to
+comply with such restrictions.
