@@ -14,6 +14,8 @@ You need to run .ch8 file in Chip 8 Emulator/Interpreter
 
 
 WARNING: You may have control some of these cities, write them down.
+
+
 0. Almeria
 1. Pampalona
 2. Zargosa
