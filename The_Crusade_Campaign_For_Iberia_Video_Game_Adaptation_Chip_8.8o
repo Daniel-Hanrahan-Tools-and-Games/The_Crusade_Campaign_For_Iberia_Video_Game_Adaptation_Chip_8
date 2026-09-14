@@ -1,0 +1,247 @@
+# The Crusade Campaign For Iberia - 1977 Strict Standard Port
+# Set the program origin memory address to 0x200 (standard CHIP-8 user memory start)
+:org 0x200
+
+: main
+    # Initialize game state registers
+    # v0 tracks the current screen/state: 0=Notice, 1=Menu, 2=Resolve, 3=GameOver, 4=Success
+    v0 := 0
+    # v1 tracks the currently selected city index (0 to 13, representing 14 cities)
+    v1 := 0
+
+: loop_start
+    # Clear the 64x32 screen at the start of every single frame tick
+    clear
+    # If state register (v0) is not 0, skip to checking the next state
+    if v0 != 0 then jump check_state_1
+
+    # --- STATE 0: NOTICE SCREEN ---
+    # Load hex value 12 (C character) into v2 to represent copyright/notice screen
+    v2 := 12
+    # Set the index register (i) to point to the built-in hexadecimal font sprite for 'C'
+    i := hex v2
+    # Set X coordinate (v3) to center-ish horizontally (pixel column 28)
+    v3 := 28
+    # Set Y coordinate (v4) vertically (pixel row 14)
+    v4 := 14
+    # Draw a 5-pixel tall sprite from the font data onto the screen
+    sprite v3 v4 5
+
+    # Check if Key 5 (W key on standard QWERTY) is pressed to start the game
+    v2 := 5
+    if v2 -key then jump loop_end
+    # Transition game state from Notice (0) to Menu (1)
+    v0 := 1
+    # Jump to debounce delay routine to handle button timing cool-down
+    jump debounce
+
+: check_state_1
+    # If state register (v0) is not 1, skip to checking state 2
+    if v0 != 1 then jump check_state_2
+
+    # --- STATE 1: MENU SCREEN ---
+    # Load the current city selection index from v1 into the hex font drawer
+    i := hex v1
+    # Set X coordinate position (pixel column 30) for rendering the city character
+    v3 := 30
+    # Set Y coordinate position (pixel row 14)
+    v4 := 14
+    # Draw the current city index digit (0 through D) onto the screen
+    sprite v3 v4 5
+
+    # Check Key 2 (Up arrow / '2' key) to cycle upward through cities
+    v2 := 2
+    if v2 -key then jump menu_check_down
+    # If current index is already 0, wrap around to the last city index (13 / D)
+    if v1 == 0 then jump menu_wrap_up
+    # Decrement city index by 1 using 8-bit arithmetic overflow (v1 + 255 = v1 - 1)
+    v1 += 255
+    jump debounce
+: menu_wrap_up
+    # Wrap selection back around to the final city index (13)
+    v1 := 13
+    jump debounce
+
+: menu_check_down
+    # Check Key 8 (Down arrow / 'S' key) to cycle downward through cities
+    v2 := 8
+    if v2 -key then jump menu_check_select
+    # If current index is at the last city (13), wrap around back to 0
+    if v1 == 13 then jump menu_wrap_down
+    # Increment city index by 1
+    v1 += 1
+    jump debounce
+: menu_wrap_down
+    # Wrap selection back around to the first city index (0)
+    v1 := 0
+    jump debounce
+
+: menu_check_select
+    # Check Key 5 (Select / 'W' key) to confirm target city and launch campaign
+    v2 := 5
+    if v2 -key then jump loop_end
+    # Transition state to Resolve/Conquest calculations (State 2)
+    v0 := 2
+    jump debounce
+
+: check_state_2
+    # If state register (v0) is not 2, skip to checking state 3
+    if v0 != 2 then jump check_state_3
+
+    # --- STATE 2: RESOLVE CONQUEST ---
+    # Set target die limit to 12 (D12) for terrain crossing check
+    vC := 12
+    # Execute the procedural dice rolling subroutine
+    roll_dice
+    # If rolled value in v4 equals 12, critical failure -> branch to game over
+    if v4 == 12 then jump game_over
+
+    # Set die limit to 10 (D10) for desert traversal check
+    vC := 10
+    roll_dice
+    if v4 == 10 then jump game_over
+
+    # Set die limit to 8 (D8) for allied river crossing check
+    vC := 8
+    roll_dice
+    if v4 == 8 then jump game_over
+
+    # Set die limit to 6 (D6) for forest traversal check
+    vC := 6
+    roll_dice
+    if v4 == 6 then jump game_over
+
+    # Set die limit to 4 (D4) for mountain traversal check
+    vC := 4
+    roll_dice
+    if v4 == 4 then jump game_over
+
+    # Set die limit to 20 (D20) for final assault check (special rule: must NOT equal 20 to fail/survive)
+    vC := 20
+    roll_dice
+    if v4 != 20 then jump game_over
+
+    # Repeat exact parallel sequence blocks for political crisis sub-phase
+    vC := 12
+    roll_dice
+    if v4 == 12 then jump game_over
+
+    vC := 10
+    roll_dice
+    if v4 == 10 then jump game_over
+
+    vC := 8
+    roll_dice
+    if v4 == 8 then jump game_over
+
+    vC := 6
+    roll_dice
+    if v4 == 6 then jump game_over
+
+    vC := 4
+    roll_dice
+    if v4 == 4 then jump game_over
+
+    vC := 20
+    roll_dice
+    if v4 == 20 then jump game_over
+
+    # If all checks pass successfully without jumping to game over, set state to Success (4)
+    v0 := 4
+    jump debounce
+
+: game_over
+    # Set state register to Game Over (3)
+    v0 := 3
+    jump debounce
+
+: check_state_3
+    # If state register (v0) is not 3, skip to checking state 4
+    if v0 != 3 then jump check_state_4
+    
+    # --- STATE 3: GAME OVER ---
+    # Load hex value 15 ('F' character representing Failure/Game Over) into v2
+    v2 := 15
+    i := hex v2
+    # Set X screen position coordinate
+    v3 := 30
+    # Set Y screen position coordinate
+    v4 := 14
+    # Draw the 'F' sprite onto the screen
+    sprite v3 v4 5
+
+    # Check Key 5 to trigger game reset
+    v2 := 5
+    if v2 -key then jump loop_end
+    # Reset state back to Menu (1)
+    v0 := 1
+    # Reset city cursor back to index 0
+    v1 := 0
+    jump debounce
+
+: check_state_4
+    # If state register is not 4, jump directly to skip/debounce handling
+    if v0 != 4 then jump debounce
+    
+    # --- STATE 4: SUCCESS ---
+    # Load hex value 10 ('A' character representing Advance/Success) into v2
+    v2 := 10
+    i := hex v2
+    # Set X screen position coordinate
+    v3 := 30
+    # Set Y screen position coordinate
+    v4 := 14
+    # Draw the 'A' sprite onto the screen
+    sprite v3 v4 5
+
+    # Check Key 5 to acknowledge success and return back to the menu
+    v2 := 5
+    if v2 -key then jump loop_end
+    # Return state back to Menu (1) to select next target
+    v0 := 1
+    jump debounce
+
+: debounce
+    # Wait ~60 frames (~1 second) to let go of the key naturally, you may need to change it based on your emulator/interpreter
+    v2 := 60
+    # Assign frame count value to the hardware delay timer register
+    delay := v2
+: wait_debounce
+    # Continuously read the decrementing hardware delay timer value into v2
+    v2 := delay
+    # Loop back until the delay timer has completely ticked down to zero
+    if v2 != 0 then jump wait_debounce
+    jump loop_end
+
+: loop_end
+    # Establish baseline frame rate limiter clock tick (1 frame delay)
+    v2 := 1
+    delay := v2
+: wait_frame
+    v2 := delay
+    if v2 != 0 then jump wait_frame
+    # Loop back to top of the main game loop to render the next frame
+    jump loop_start
+
+: roll_dice
+    # Generate pseudo-random byte from 0 to 255 and store in register v3
+    v3 := random 255
+    # Initialize accumulator register v4 to zero for counting modulo divisions
+    v4 := 0
+: roll_loop
+    # If the random byte accumulator has been fully depleted to zero, exit loop
+    if v3 == 0 then jump roll_end
+    # Decrement random value using 8-bit overflow addition (v3 + 255 = v3 - 1)
+    v3 += 255
+    # Increment our current trial modulo count by 1
+    v4 += 1
+    # Compare trial count against maximum die ceiling parameter stored in vC
+    if v4 != vC then jump roll_loop
+    # If we hit the max die ceiling boundary, reset accumulator back to 0 to loop modulus again
+    v4 := 0
+    jump roll_loop
+: roll_end
+    # Convert from 0-based remainder index up to 1-based standard die roll result
+    v4 += 1
+    # Return execution flow back to the caller subroutine instruction line
+    return
