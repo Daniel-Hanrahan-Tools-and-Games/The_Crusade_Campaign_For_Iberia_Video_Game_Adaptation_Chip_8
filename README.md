@@ -15,6 +15,12 @@ You need to run .ch8 file in Chip 8 Emulator/Interpreter
 
 
 
+<h3>Link to page repo</h3>
+
+<a href="https://github.com/Daniel-Hanrahan-Tools-and-Games/The_Crusade_Campaign_For_Iberia_Video_Game_Adaptation_Chip_8">Repository Page</a>
+
+
+
 WARNING: You may have control some of these cities, write them down.
 
 
